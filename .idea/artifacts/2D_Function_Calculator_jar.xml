@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="2D Function Calculator:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/2D_Function_Calculator_jar</output-path>
+    <root id="archive" name="2D Function Calculator.jar">
+      <element id="module-output" name="2D Function Calculator" />
+    </root>
+  </artifact>
+</component>
