@@ -61,7 +61,7 @@ public class Function {
         if(origin.x + point.x > WIDTH + buffer) {
             points.remove(point);
         }
-        else if(origin.x + point.x < -buffer) {
+        else if(origin.x - point.x < -buffer) {
             points.remove(point);
         }
     }
