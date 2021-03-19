@@ -41,7 +41,8 @@ public class Function {
                     g.drawRect(Math.round(point.x) + origin.x, (int) Math.round(yValue), 1, 1);
                 }
             }
-        } catch (ConcurrentModificationException e) {
+        } catch (ConcurrentModificationException ignored) {
+
         }
 
     }
@@ -59,11 +60,9 @@ public class Function {
     public void updateFunctionBuffer(MyPoint point, int buffer) {
         if(origin.x + point.x > WIDTH + buffer) {
             points.remove(point);
-            return;
         }
-        else if(origin.x + point.x < 0 - buffer) {
+        else if(origin.x + point.x < -buffer) {
             points.remove(point);
-            return;
         }
     }
 }
