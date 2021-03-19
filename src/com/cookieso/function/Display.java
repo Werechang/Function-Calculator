@@ -27,7 +27,6 @@ public class Display extends Canvas implements Runnable{
 
     private static Functions functions;
     public static MyPoint origin;
-    public static double pos;
 
     public Display() {
         frame = new JFrame();
@@ -36,6 +35,7 @@ public class Display extends Canvas implements Runnable{
         this.addMouseListener(inputManager.mouse);
         this.addMouseMotionListener(inputManager.mouse);
         this.addMouseWheelListener(inputManager.mouse);
+        this.addKeyListener(inputManager.keyboard);
     }
 
     public static void main(String[] args) {
