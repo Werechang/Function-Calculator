@@ -24,8 +24,10 @@ public class Display extends Canvas implements Runnable{
     private final InputManager inputManager;
     private Thread thread;
     private boolean running = false;
+
     private static Functions functions;
     public static MyPoint origin;
+    public static double pos;
 
     public Display() {
         frame = new JFrame();

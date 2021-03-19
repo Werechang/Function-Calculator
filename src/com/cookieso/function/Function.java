@@ -2,8 +2,10 @@ package com.cookieso.function;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 
 import static com.cookieso.function.Display.WIDTH;
+import static com.cookieso.function.Display.origin;
 
 public class Function {
     /* origin.x is the x value of the origin relative to the display.
@@ -15,6 +17,8 @@ public class Function {
     * value for the bottom. Finally, origin.y is added to y for the same reason as origin.x to x.
     * */
 
+    // TODO: Repair updateFunctionBuffer, fix Display not showing the graph if origin.x < 0
+
     public ArrayList<MyPoint> points = new ArrayList<>();
     public Color color;
     private final double value;
@@ -23,27 +27,43 @@ public class Function {
         this.color = color;
         this.value = value;
         long startCalc = System.currentTimeMillis();
-        calcFunction();
+        calcFunction(-1000, 1000, 0.005);
         System.out.println("Finished calculating: " + (System.currentTimeMillis() - startCalc) + " ms");
     }
 
     public void renderGraph(MyPoint origin, Graphics g) {
-        for(MyPoint point : points) {
+        try {
+            for(MyPoint point : points) {
+                updateFunctionBuffer(point, 1000);
                 if(point.x >= -(origin.x) && point.x <= (WIDTH - origin.x)) {
                     double yValue = (point.y)*-1 + origin.y;
                     g.setColor(color);
                     g.drawRect(Math.round(point.x) + origin.x, (int) Math.round(yValue), 1, 1);
                 }
+            }
+        } catch (ConcurrentModificationException e) {
         }
+
     }
 
-    public void calcFunction() {
-        for(double x = -5000; x < 5000; x+=0.005) {
-            points.add(new MyPoint((int) x, (int) (-0.002*Math.pow(x, 3) + .2*x*value)  ));
+    public void calcFunction(int start, int end, double increase) {
+        for(double x = start; x < end; x+=increase) {
+            points.add(new MyPoint((int) x, (int) (0.02*value*x) ));
         }
     }
 
     public void setColor(Color color) {
         this.color = color;
+    }
+
+    public void updateFunctionBuffer(MyPoint point, int buffer) {
+        if(origin.x + point.x > WIDTH + buffer) {
+            points.remove(point);
+            return;
+        }
+        else if(origin.x + point.x < 0 - buffer) {
+            points.remove(point);
+            return;
+        }
     }
 }

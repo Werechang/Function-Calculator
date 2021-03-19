@@ -12,7 +12,7 @@ public class Functions {
     }
 
     public void renderFunctions(MyPoint origin, Graphics g) {
-        for (Function function : functions) {
+        for (Function function : this.functions) {
             function.renderGraph(origin, g);
         }
     }
