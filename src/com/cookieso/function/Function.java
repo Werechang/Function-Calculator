@@ -17,7 +17,7 @@ public class Function {
     * value for the bottom. Finally, origin.y is added to y for the same reason as origin.x to x.
     * */
 
-    // TODO: Repair updateFunctionBuffer, fix Display not showing the graph if origin.x < 0
+    // TODO: Repair updateFunctionBuffer, fix Display not showing the graph if origin.x < 0.
 
     public ArrayList<MyPoint> points = new ArrayList<>();
     public Color color;
