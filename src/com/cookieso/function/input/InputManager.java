@@ -18,6 +18,12 @@ public class InputManager {
             origin.x += (x - initialX) * sensitivity;
             origin.y += (y - initialY) * sensitivity;
         }
+        if (mouse.isScrollingDown()) {
+            // TODO: Change size: zoom out
+        }
+        if (mouse.isScrollingUp()) {
+            // TODO: Change size: zoom in
+        }
         mouse.resetScroll();
         initialX = x;
         initialY = y;

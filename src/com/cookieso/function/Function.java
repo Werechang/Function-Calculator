@@ -9,7 +9,7 @@ import static com.cookieso.function.Display.origin;
 
 public class Function {
     /* origin.x is the x value of the origin relative to the display.
-    * point.x is the initial x value in coordinate system.
+    * point.x is the initial x value in the coordinate system.
     * The point is in the display if it´s value is greater than origin.x - point.x. If point.x = -300 and origin.x = 400
     * it means, that the minimum initial x value has to be -400 for the point to be visible. In this case, it is displayed
     * at display.x = 100.
