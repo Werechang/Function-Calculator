@@ -12,20 +12,23 @@ public class Display extends Canvas implements Runnable{
 
     // TODO: Scale background
 
-    // Input settings are in InputManager. (f.e. sensitivity)
+    // Input settings are in InputManager
     public static int HEIGHT = 600;
     public static int WIDTH = 800;
     public static final String TITLE = "Function Calculator";
     public static final int FPS = 60;
+
+    public static double scale = 10;
     public static final Color BACKGROUND_COLOR = new Color(0x26292c);
     public static final Color AXIS_COLOR = new Color(0xededed);
-    public static double scale = 10;
-
+    public static final Color EXTRA_AXIS_COLOR = new Color(0x1E4A4E);
 
     private final JFrame frame;
-    private final InputManager inputManager;
+
     private Thread thread;
     private boolean running = false;
+
+    private final InputManager inputManager;
 
     private static Functions functions;
     public static MyPoint origin;
@@ -53,13 +56,15 @@ public class Display extends Canvas implements Runnable{
         display.frame.setMinimumSize(new Dimension(300, 250));
         display.frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         display.frame.setVisible(true);
+
         origin = new MyPoint(WIDTH/2.0, HEIGHT/2.0);
+
         Function function1 = new Function(Color.RED, -10);
         Function function2 = new Function(Color.BLUE, 20);
         functions = new Functions(function1, function2);
 
-        display.start();
         System.out.println("Exiting main after " + (System.currentTimeMillis() -  start) + " ms");
+        display.start();
     }
 
     private synchronized void start() {
@@ -94,8 +99,10 @@ public class Display extends Canvas implements Runnable{
             long now = System.nanoTime();
             delta += ((now - lastTime) / ns);
             lastTime = now;
+
             HEIGHT = frame.getHeight();
             WIDTH = frame.getWidth();
+
             while (delta >= 1) {
                 update();
                 delta--;
@@ -136,7 +143,7 @@ public class Display extends Canvas implements Runnable{
     }
 
     private void renderCoordinateSystem(Graphics g) {
-        g.setColor(new Color(0x1E4A4E));
+        g.setColor(EXTRA_AXIS_COLOR);
         for (double i = 100; i > -100; i-=10) {
             g.fillRect(0, (int) (origin.y - i*scale), WIDTH*4, 1);
             g.fillRect((int) (origin.x - i*scale),0 , 1, HEIGHT*4);
@@ -146,6 +153,5 @@ public class Display extends Canvas implements Runnable{
         // Main axis
         g.fillRect(0, (int) origin.y, WIDTH*4, 1);
         g.fillRect((int) origin.x,0 , 1, HEIGHT*4);
-
     }
 }

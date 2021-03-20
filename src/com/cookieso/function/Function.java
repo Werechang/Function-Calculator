@@ -16,7 +16,7 @@ public class Function {
     * value for the bottom. Finally, origin.y is added to y for the same reason as origin.x to x.
     * */
 
-    // TODO: Write algorithm for adding new points to the buffer or connecting points.
+    // TODO: Fix scaling: currently scales to center
 
     public ArrayList<MyPoint> points = new ArrayList<>();
     public Color color;
@@ -34,7 +34,7 @@ public class Function {
         try {
             for(MyPoint point : points) {
                 updateFunctionBuffer(point, 4000);
-                if(point.x >= -(origin.x) && point.x <= (WIDTH - origin.x)) {
+                if(point.x*scale >= -(origin.x) && point.x*scale <= (WIDTH - origin.x)) {
                     double yValue = (point.y)*-1*scale + origin.y;
                     g.setColor(color);
                     g.drawRect((int) Math.round((point.x*scale + origin.x)), (int) Math.round(yValue), 1, 1);
