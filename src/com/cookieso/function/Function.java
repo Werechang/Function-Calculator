@@ -4,8 +4,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
 
-import static com.cookieso.function.Display.WIDTH;
-import static com.cookieso.function.Display.origin;
+import static com.cookieso.function.Display.*;
 
 public class Function {
     /* origin.x is the x value of the origin relative to the display.
@@ -32,11 +31,11 @@ public class Function {
     public void renderGraph(MyPoint origin, Graphics g) {
         try {
             for(MyPoint point : points) {
-                updateFunctionBuffer(point, 1000);
+                updateFunctionBuffer(point, 4000);
                 if(point.x >= -(origin.x) && point.x <= (WIDTH - origin.x)) {
-                    double yValue = (point.y)*-1 + origin.y;
+                    double yValue = (point.y)*-1*scale + origin.y;
                     g.setColor(color);
-                    g.drawRect(Math.round(point.x) + origin.x, (int) Math.round(yValue), 1, 1);
+                    g.drawRect((int) Math.round((point.x*scale + origin.x)), (int) Math.round(yValue), 1, 1);
                 }
             }
         } catch (ConcurrentModificationException ignored) {
@@ -46,8 +45,13 @@ public class Function {
     }
 
     public void calcFunction(int start, int end, double increase) {
+        // Placeholder String for testing
+        String equation = "3*x + 10";
+        // String for math algorithm
+
+        // calculate f(x)
         for(double x = start; x < end; x+=increase) {
-            points.add(new MyPoint((int) x, (int) (0.02*value*x) ));
+            points.add(new MyPoint((int) Math.round(x), (int) Math.round(Math.pow(x, 3)*0.4 - Math.pow(x, 2)*0.1 + 4) ));
         }
     }
 
@@ -56,10 +60,10 @@ public class Function {
     }
 
     public void updateFunctionBuffer(MyPoint point, int buffer) {
-        if(origin.x + point.x > WIDTH + buffer) {
+        if(origin.x + point.x*scale > WIDTH + buffer) {
             points.remove(point);
         }
-        else if(origin.x - point.x < -buffer) {
+        else if(origin.x - point.x*scale < -buffer) {
             points.remove(point);
         }
     }

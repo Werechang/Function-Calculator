@@ -7,7 +7,8 @@ public class InputManager {
     public MouseInput mouse;
     public Keyboard keyboard;
     private int initialX, initialY = 0;
-    public double sensitivity = 1;
+    public final double sensitivity = 1;
+    public final double zoomSensitivity = 1.2;
 
     public InputManager() {
         mouse = new MouseInput();
@@ -23,10 +24,10 @@ public class InputManager {
             origin.y += (y - initialY) * sensitivity;
         }
         if (mouse.isScrollingDown()) {
-            // TODO: Change size: zoom out
+            Display.scale /= zoomSensitivity;
         }
         if (mouse.isScrollingUp()) {
-            // TODO: Change size: zoom in
+            Display.scale *= zoomSensitivity;
         }
         if(keyboard.getSpace()) {
             origin.x = Display.WIDTH/2;

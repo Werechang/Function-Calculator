@@ -123,8 +123,10 @@ public class Display extends Canvas implements Runnable{
         Graphics g = bs.getDrawGraphics();
         // Create coordinate system
         g.setColor(BACKGROUND_COLOR);
+        // Background
         g.fillRect(0, 0, WIDTH * 3, HEIGHT * 3);
         g.setColor(AXIS_COLOR);
+        // Main axis
         g.fillRect(0, origin.y, WIDTH*4, 1);
         g.fillRect(origin.x,0 , 1, HEIGHT*4);
         // Draw functions
