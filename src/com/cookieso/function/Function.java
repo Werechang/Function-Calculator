@@ -16,7 +16,7 @@ public class Function {
     * value for the bottom. Finally, origin.y is added to y for the same reason as origin.x to x.
     * */
 
-    // TODO: Write algorithm for adding new points to buffer or connecting points.
+    // TODO: Write algorithm for adding new points to the buffer or connecting points.
 
     public ArrayList<MyPoint> points = new ArrayList<>();
     public Color color;
@@ -53,7 +53,7 @@ public class Function {
 
         // calculate f(x)
         for(double x = start; x < end; x+=increase) {
-            points.add(new MyPoint(x, Math.pow(x, 3)*0.4 - Math.pow(x, 2)*0.1 + 4) );
+            points.add(new MyPoint(x, value*0.1*x + value) );
         }
     }
 

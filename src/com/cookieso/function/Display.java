@@ -10,6 +10,8 @@ import java.awt.image.BufferStrategy;
 public class Display extends Canvas implements Runnable{
     private static final long serialVersionUID = 1L;
 
+    // TODO: Scale background
+
     // Input settings are in InputManager. (f.e. sensitivity)
     public static int HEIGHT = 600;
     public static int WIDTH = 800;
@@ -51,7 +53,7 @@ public class Display extends Canvas implements Runnable{
         display.frame.setMinimumSize(new Dimension(300, 250));
         display.frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         display.frame.setVisible(true);
-        origin = new MyPoint(WIDTH/2, HEIGHT/2);
+        origin = new MyPoint(WIDTH/2.0, HEIGHT/2.0);
         Function function1 = new Function(Color.RED, -10);
         Function function2 = new Function(Color.BLUE, 20);
         functions = new Functions(function1, function2);
@@ -121,17 +123,29 @@ public class Display extends Canvas implements Runnable{
         }
 
         Graphics g = bs.getDrawGraphics();
-        // Create coordinate system
-        g.setColor(BACKGROUND_COLOR);
         // Background
+        g.setColor(BACKGROUND_COLOR);
         g.fillRect(0, 0, WIDTH * 3, HEIGHT * 3);
-        g.setColor(AXIS_COLOR);
-        // Main axis
-        g.fillRect(0, (int) origin.y, WIDTH*4, 1);
-        g.fillRect((int) origin.x,0 , 1, HEIGHT*4);
+
+        renderCoordinateSystem(g);
+
         // Draw functions
         functions.renderFunctions(origin, g);
         g.dispose();
         bs.show();
+    }
+
+    private void renderCoordinateSystem(Graphics g) {
+        g.setColor(new Color(0x1E4A4E));
+        for (double i = 100; i > -100; i-=10) {
+            g.fillRect(0, (int) (origin.y - i*scale), WIDTH*4, 1);
+            g.fillRect((int) (origin.x - i*scale),0 , 1, HEIGHT*4);
+        }
+
+        g.setColor(AXIS_COLOR);
+        // Main axis
+        g.fillRect(0, (int) origin.y, WIDTH*4, 1);
+        g.fillRect((int) origin.x,0 , 1, HEIGHT*4);
+
     }
 }
