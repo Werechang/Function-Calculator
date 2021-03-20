@@ -32,6 +32,7 @@ public class InputManager {
         if(keyboard.getSpace()) {
             origin.x = Display.WIDTH/2;
             origin.y = Display.HEIGHT/2;
+            Display.scale = 10;
         }
         mouse.resetScroll();
         initialX = x;

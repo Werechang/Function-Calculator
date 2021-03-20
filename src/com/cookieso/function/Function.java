@@ -53,7 +53,7 @@ public class Function {
 
         // calculate f(x)
         for(double x = start; x < end; x+=increase) {
-            points.add(new MyPoint((int) Math.round(x), (int) Math.round(Math.pow(x, 3)*0.4 - Math.pow(x, 2)*0.1 + 4) ));
+            points.add(new MyPoint(x, Math.pow(x, 3)*0.4 - Math.pow(x, 2)*0.1 + 4) );
         }
     }
 

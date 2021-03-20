@@ -17,7 +17,7 @@ public class Display extends Canvas implements Runnable{
     public static final int FPS = 60;
     public static final Color BACKGROUND_COLOR = new Color(0x26292c);
     public static final Color AXIS_COLOR = new Color(0xededed);
-    public static double scale = 1;
+    public static double scale = 10;
 
 
     private final JFrame frame;
@@ -127,8 +127,8 @@ public class Display extends Canvas implements Runnable{
         g.fillRect(0, 0, WIDTH * 3, HEIGHT * 3);
         g.setColor(AXIS_COLOR);
         // Main axis
-        g.fillRect(0, origin.y, WIDTH*4, 1);
-        g.fillRect(origin.x,0 , 1, HEIGHT*4);
+        g.fillRect(0, (int) origin.y, WIDTH*4, 1);
+        g.fillRect((int) origin.x,0 , 1, HEIGHT*4);
         // Draw functions
         functions.renderFunctions(origin, g);
         g.dispose();
