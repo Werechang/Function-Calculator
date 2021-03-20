@@ -16,6 +16,8 @@ public class Function {
     * value for the bottom. Finally, origin.y is added to y for the same reason as origin.x to x.
     * */
 
+    // TODO: Write algorithm for adding new points to buffer or connecting points. Fix round issue when scaling (Probably the MyPoint int problem)
+
     public ArrayList<MyPoint> points = new ArrayList<>();
     public Color color;
     private final double value;
