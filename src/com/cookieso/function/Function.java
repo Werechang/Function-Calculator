@@ -14,6 +14,8 @@ public class Function {
     * at display.x = 100.
     * The y value is multiplied with -1 because the display uses the inverted y-axis. y = 0 is at the top, HEIGHT is the
     * value for the bottom. Finally, origin.y is added to y for the same reason as origin.x to x.
+    * The last part of the if statement is for performance. With large scales (actually a small scale number) it paints
+    * less points.
     * */
 
     // TODO: Fix scaling: currently scales to center
@@ -26,7 +28,7 @@ public class Function {
         this.color = color;
         this.value = value;
         long startCalc = System.currentTimeMillis();
-        calcFunction(-1000, 1000, 0.005);
+        calcFunction(-1000, 1000, 0.01);
         System.out.println("Finished calculating: " + (System.currentTimeMillis() - startCalc) + " ms");
     }
 
@@ -34,7 +36,7 @@ public class Function {
         try {
             for(MyPoint point : points) {
                 updateFunctionBuffer(point, 4000);
-                if(point.x*scale >= -(origin.x) && point.x*scale <= (WIDTH - origin.x)) {
+                if(point.x*scale >= -(origin.x) && point.x*scale <= (WIDTH - origin.x) && (point.x%(0.1/scale) >= -0.01) && (point.x%(0.1/scale) <= 0.01)) {
                     double yValue = (point.y)*-1*scale + origin.y;
                     g.setColor(color);
                     g.drawRect((int) Math.round((point.x*scale + origin.x)), (int) Math.round(yValue), 1, 1);

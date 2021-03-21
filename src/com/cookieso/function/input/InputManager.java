@@ -30,8 +30,8 @@ public class InputManager {
             Display.scale *= zoomSensitivity;
         }
         if(keyboard.getSpace()) {
-            origin.x = Display.WIDTH/2;
-            origin.y = Display.HEIGHT/2;
+            origin.x = Display.WIDTH/2.0;
+            origin.y = Display.HEIGHT/2.0;
             Display.scale = 10;
         }
         mouse.resetScroll();
