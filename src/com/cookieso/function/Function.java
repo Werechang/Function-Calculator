@@ -42,10 +42,7 @@ public class Function {
                     g.drawRect((int) Math.round((point.x*scale + origin.x)), (int) Math.round(yValue), 1, 1);
                 }
             }
-        } catch (ConcurrentModificationException ignored) {
-
-        }
-
+        } catch (ConcurrentModificationException ignored) { }
     }
 
     public void calcFunction(int start, int end, double increase) {
