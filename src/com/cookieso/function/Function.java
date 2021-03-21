@@ -28,15 +28,15 @@ public class Function {
         this.color = color;
         this.value = value;
         long startCalc = System.currentTimeMillis();
-        calcFunction(-1000, 1000, 0.01);
+        calcFunction(-1000, 1000, 0.005);
         System.out.println("Finished calculating: " + (System.currentTimeMillis() - startCalc) + " ms");
     }
 
     public void renderGraph(MyPoint origin, Graphics g) {
         try {
             for(MyPoint point : points) {
-                updateFunctionBuffer(point, 4000);
-                if(point.x*scale >= -(origin.x) && point.x*scale <= (WIDTH - origin.x) && (point.x%(0.1/scale) >= -0.01) && (point.x%(0.1/scale) <= 0.01)) {
+                //updateFunctionBuffer(point, 4000);
+                if(point.x*scale >= -(origin.x) && point.x*scale <= (WIDTH - origin.x) && (point.x % (0.5/scale) >= -0.01) && (point.x % (0.5/scale) <= 0.01)) {
                     double yValue = (point.y)*-1*scale + origin.y;
                     g.setColor(color);
                     g.drawRect((int) Math.round((point.x*scale + origin.x)), (int) Math.round(yValue), 1, 1);
@@ -48,9 +48,8 @@ public class Function {
     public void calcFunction(int start, int end, double increase) {
         // Placeholder String for testing
         String equation = "3*x + 10";
-        // String for math algorithm
 
-        // calculate f(x)
+        // calculate f(x) of each point, add those into the ArrayList
         for(double x = start; x < end; x+=increase) {
             points.add(new MyPoint(x, value*0.1*x + value) );
         }
@@ -61,6 +60,7 @@ public class Function {
     }
 
     public void updateFunctionBuffer(MyPoint point, int buffer) {
+        // Remove points outside of a specific range (display + buffer)
         if(origin.x + point.x*scale > WIDTH + buffer) {
             points.remove(point);
         }

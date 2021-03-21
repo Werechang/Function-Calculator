@@ -7,8 +7,10 @@ public class InputManager {
     public MouseInput mouse;
     public Keyboard keyboard;
     private int initialX, initialY = 0;
-    public final double sensitivity = 1;
-    public final double zoomSensitivity = 1.2;
+    public final double SENSITIVITY = 1;
+    public final double ZOOM_SENSITIVITY = 1.2;
+    public final double MAX_SCALE = 0.1;
+    public final double MIN_SCALE = 400;
 
     public InputManager() {
         mouse = new MouseInput();
@@ -20,14 +22,14 @@ public class InputManager {
         int x = mouse.getX();
         int y = mouse.getY();
         if(mouse.getButton() == ClickType.LEFT_CLICK) {
-            origin.x += (x - initialX) * sensitivity;
-            origin.y += (y - initialY) * sensitivity;
+            origin.x += (x - initialX) * SENSITIVITY;
+            origin.y += (y - initialY) * SENSITIVITY;
         }
-        if (mouse.isScrollingDown()) {
-            Display.scale /= zoomSensitivity;
+        if (mouse.isScrollingDown() && Display.scale >= MAX_SCALE) {
+            Display.scale /= ZOOM_SENSITIVITY;
         }
-        if (mouse.isScrollingUp()) {
-            Display.scale *= zoomSensitivity;
+        if (mouse.isScrollingUp() && Display.scale <= MIN_SCALE) {
+            Display.scale *= ZOOM_SENSITIVITY;
         }
         if(keyboard.getSpace()) {
             origin.x = Display.WIDTH/2.0;

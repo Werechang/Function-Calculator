@@ -22,6 +22,7 @@ public class Display extends Canvas implements Runnable{
     public static final Color BACKGROUND_COLOR = new Color(0x26292c);
     public static final Color AXIS_COLOR = new Color(0xededed);
     public static final Color EXTRA_AXIS_COLOR = new Color(0x256E74);
+    public static final Color SMALL_AXIS_COLOR = new Color(0x404040);
 
     private final JFrame frame;
 
@@ -143,15 +144,17 @@ public class Display extends Canvas implements Runnable{
     }
 
     private void renderCoordinateSystem(Graphics g) {
-        if (scale >= 10) {
-            g.setColor(new Color(0x404040));
+        // Paint small grid
+        if (scale >= 5) {
+            g.setColor(SMALL_AXIS_COLOR);
             for (double i = 100; i > -100; i-=1) {
                 g.fillRect(0, (int) (origin.y - i*scale), WIDTH*4, 1);
                 g.fillRect((int) (origin.x - i*scale),0 , 1, HEIGHT*4);
             }
         }
-        g.setColor(EXTRA_AXIS_COLOR);
-        if (scale >= 0.5) {
+
+        if (scale >= 1) {
+            g.setColor(EXTRA_AXIS_COLOR);
             for (double i = 1000; i > -1000; i-=10) {
                 g.fillRect(0, (int) (origin.y - i*scale), WIDTH*4, 1);
                 g.fillRect((int) (origin.x - i*scale),0 , 1, HEIGHT*4);
