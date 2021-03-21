@@ -9,7 +9,7 @@ public class InputManager {
     private int initialX, initialY = 0;
     public final double SENSITIVITY = 1;
     public final double ZOOM_SENSITIVITY = 1.2;
-    public final double MAX_SCALE = 0.1;
+    public final double MAX_SCALE = 0.5;
     public final double MIN_SCALE = 400;
 
     public InputManager() {

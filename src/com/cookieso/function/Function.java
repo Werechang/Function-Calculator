@@ -36,7 +36,7 @@ public class Function {
         try {
             for(MyPoint point : points) {
                 updateFunctionBuffer(point, 4000);
-                if(point.x*scale >= -(origin.x) && point.x*scale <= (WIDTH - origin.x) && (point.x % (0.5/scale) >= -0.01) && (point.x % (0.5/scale) <= 0.01)) {
+                if(point.x*scale >= -(origin.x) && point.x*scale <= (WIDTH - origin.x) && (point.x % (1/scale) >= -0.01) && (point.x % (1/scale) <= 0.01)) {
                     double yValue = (point.y)*-1*scale + origin.y;
                     g.setColor(color);
                     g.drawRect((int) Math.round((point.x*scale + origin.x)), (int) Math.round(yValue), 1, 1);
@@ -49,7 +49,7 @@ public class Function {
         // Placeholder String for testing
         String equation = "3*x + 10";
 
-        // calculate f(x) of each point, add those into the ArrayList
+        // Calculate f(x) of each point, add those into the ArrayList
         for(double x = start; x < end; x+=increase) {
             points.add(new MyPoint(x, value*0.1*x + value) );
         }
@@ -61,10 +61,10 @@ public class Function {
 
     public void updateFunctionBuffer(MyPoint point, int buffer) {
         // Remove points outside of a specific range (display + buffer)
-        if(origin.x + point.x*scale > WIDTH + buffer) {
+        if(origin.x + point.x > WIDTH + buffer) {
             points.remove(point);
         }
-        else if(origin.x - point.x*scale < -buffer) {
+        else if(origin.x - point.x < -buffer) {
             points.remove(point);
         }
     }
