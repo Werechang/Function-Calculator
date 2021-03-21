@@ -35,7 +35,7 @@ public class Function {
     public void renderGraph(MyPoint origin, Graphics g) {
         try {
             for(MyPoint point : points) {
-                //updateFunctionBuffer(point, 4000);
+                updateFunctionBuffer(point, 4000);
                 if(point.x*scale >= -(origin.x) && point.x*scale <= (WIDTH - origin.x) && (point.x % (0.5/scale) >= -0.01) && (point.x % (0.5/scale) <= 0.01)) {
                     double yValue = (point.y)*-1*scale + origin.y;
                     g.setColor(color);
