@@ -18,7 +18,7 @@ public class Display extends Canvas implements Runnable{
 
     public static double scale = 10;
     public static final Color BACKGROUND_COLOR = new Color(0x26292c);
-    public static final Color AXIS_COLOR = new Color(0xededed);
+    public static final Color AXIS_COLOR = new Color(0xA1A1A1);
     public static final Color EXTRA_AXIS_COLOR = new Color(0x256E74);
     public static final Color SMALL_AXIS_COLOR = new Color(0x404040);
 
@@ -149,18 +149,18 @@ public class Display extends Canvas implements Runnable{
 
         g.setColor(AXIS_COLOR);
         // Main axis
-        g.fillRect(0, (int) origin.y, WIDTH*4, 1);
-        g.fillRect((int) origin.x,0 , 1, HEIGHT*4);
+        g.fillRect(0, (int) origin.y, WIDTH*4, 2);
+        g.fillRect((int) origin.x,0 , 2, HEIGHT*4);
     }
 
     private void drawAxis(int gridSize, Graphics g, Color color, int maxScale) {
         if (scale >= maxScale) {
             g.setColor(color);
             for (double i = origin.x%(scale*gridSize); i <= WIDTH; i+=gridSize*scale) {
-                g.fillRect((int) Math.round(i), 0, 1, HEIGHT*3);
+                g.fillRect((int) i, 0, 1, HEIGHT*3);
             }
             for (double i = origin.y%(scale*gridSize); i <= HEIGHT; i+=gridSize*scale) {
-                g.fillRect(0, (int) Math.round(i), WIDTH*3, 1);
+                g.fillRect(0, (int) i, WIDTH*3, 1);
             }
         }
     }
