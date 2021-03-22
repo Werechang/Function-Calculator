@@ -147,9 +147,11 @@ public class Display extends Canvas implements Runnable{
         // Paint small grid
         if (scale >= 5) {
             g.setColor(SMALL_AXIS_COLOR);
-            for (double i = 100; i > -100; i-=1) {
-                g.fillRect(0, (int) (origin.y - i*scale), WIDTH*4, 1);
-                g.fillRect((int) (origin.x - i*scale),0 , 1, HEIGHT*4);
+            for (double i = origin.x%scale; i <= WIDTH; i+=scale) {
+                g.fillRect((int) Math.round(i), 0, 1, HEIGHT*3);
+            }
+            for (double i = origin.y%scale; i <= HEIGHT; i+=scale) {
+                g.fillRect(0, (int) Math.round(i), WIDTH*3, 1);
             }
         }
 
