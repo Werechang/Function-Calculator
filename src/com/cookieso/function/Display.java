@@ -145,29 +145,25 @@ public class Display extends Canvas implements Runnable{
 
     private void renderCoordinateSystem(Graphics g) {
         // Paint small grid
-        if (scale >= 5) {
-            g.setColor(SMALL_AXIS_COLOR);
-            for (double i = origin.x%scale; i <= WIDTH; i+=scale) {
-                g.fillRect((int) Math.round(i), 0, 1, HEIGHT*3);
-            }
-            for (double i = origin.y%scale; i <= HEIGHT; i+=scale) {
-                g.fillRect(0, (int) Math.round(i), WIDTH*3, 1);
-            }
-        }
-
-        if (scale >= 1) {
-            g.setColor(EXTRA_AXIS_COLOR);
-            for (double i = 1000; i > -1000; i-=10) {
-                g.fillRect(0, (int) (origin.y - i*scale), WIDTH*4, 1);
-                g.fillRect((int) (origin.x - i*scale),0 , 1, HEIGHT*4);
-            }
-        }
-
-
+        drawAxis(1, g, SMALL_AXIS_COLOR, 5);
+        // Paint large grid
+        drawAxis(10, g, EXTRA_AXIS_COLOR, 1);
 
         g.setColor(AXIS_COLOR);
         // Main axis
         g.fillRect(0, (int) origin.y, WIDTH*4, 1);
         g.fillRect((int) origin.x,0 , 1, HEIGHT*4);
+    }
+
+    private void drawAxis(int gridSize, Graphics g, Color color, int maxScale) {
+        if (scale >= maxScale) {
+            g.setColor(color);
+            for (double i = origin.x%(scale*gridSize); i <= WIDTH; i+=gridSize*scale) {
+                g.fillRect((int) Math.round(i), 0, 1, HEIGHT*3);
+            }
+            for (double i = origin.y%(scale*gridSize); i <= HEIGHT; i+=gridSize*scale) {
+                g.fillRect(0, (int) Math.round(i), WIDTH*3, 1);
+            }
+        }
     }
 }
