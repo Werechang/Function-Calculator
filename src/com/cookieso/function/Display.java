@@ -10,8 +10,6 @@ import java.awt.image.BufferStrategy;
 public class Display extends Canvas implements Runnable{
     private static final long serialVersionUID = 1L;
 
-    // TODO: Scale background
-
     // Input settings are in InputManager
     public static int HEIGHT = 600;
     public static int WIDTH = 800;
