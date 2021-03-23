@@ -119,6 +119,7 @@ public class Display extends Canvas implements Runnable{
 
     private void update() {
         inputManager.updateInput(origin);
+        functions.updateFunctionBuffers(4000);
     }
 
     private void render() {

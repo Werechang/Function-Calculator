@@ -20,4 +20,10 @@ public class Functions {
     public void addFunction(Function function) {
         functions.add(function);
     }
+
+    public void updateFunctionBuffers(int maxDistance) {
+        for (Function function : functions) {
+            function.updateFunctionBuffer(maxDistance);
+        }
+    }
 }
