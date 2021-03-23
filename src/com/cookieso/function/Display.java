@@ -48,7 +48,7 @@ public class Display extends Canvas implements Runnable{
 
         display.frame.add(display);
         display.frame.pack();
-        display.frame.setSize(new Dimension(WIDTH, HEIGHT));
+        display.frame.setSize(WIDTH, HEIGHT);
         display.frame.setLocationRelativeTo(null);
         display.frame.setResizable(true);
         display.frame.setTitle(Display.TITLE);
