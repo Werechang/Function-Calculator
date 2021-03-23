@@ -58,8 +58,8 @@ public class Display extends Canvas implements Runnable{
 
         origin = new MyPoint(WIDTH/2.0, HEIGHT/2.0);
 
-        Function function1 = new Function(Color.RED, -10);
-        Function function2 = new Function(Color.BLUE, 20);
+        Function function1 = new Function(Color.RED, "0.3*(x*x)+3");
+        Function function2 = new Function(Color.BLUE, "3*x - 10");
         functions = new Functions(function1, function2);
 
         System.out.println("Exiting main after " + (System.currentTimeMillis() -  start) + " ms");

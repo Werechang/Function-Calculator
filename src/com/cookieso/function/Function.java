@@ -1,5 +1,8 @@
 package com.cookieso.function;
 
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
@@ -23,29 +26,32 @@ public class Function {
 
     public ArrayList<MyPoint> points = new ArrayList<>();
     public Color color;
-    private final double value;
     private Boolean isFirstCalc = true;
+    public ArrayList<Double> zeros = new ArrayList<>();
+    public final String equation;
 
-    public Function(Color color, double value) {
+    public Function(Color color, String equation) {
         this.color = color;
-        this.value = value;
+        this.equation = equation;
         long startCalc = System.currentTimeMillis();
-        calcFunction(-2000, 2000, 0.005);
+        calcFunction(-1000, 1000, 0.005);
+        calcRoot(0.0000001);
         System.out.println("Finished calculating: " + (System.currentTimeMillis() - startCalc) + " ms");
     }
 
-    public Function(double value) {
+    public Function(String equation) {
         this.color = Color.MAGENTA;
-        this.value = value;
+        this.equation = equation;
         long startCalc = System.currentTimeMillis();
         calcFunction(-2000, 2000, 0.005);
+        calcRoot(0.0000001);
         System.out.println("Finished calculating: " + (System.currentTimeMillis() - startCalc) + " ms");
     }
 
     public void renderGraph(MyPoint origin, Graphics g) {
         try {
             for(MyPoint point : points) {
-                if(point.x*scale >= -(origin.x) && point.x*scale <= (WIDTH - origin.x) && (point.x % (1/scale) >= -0.01) && (point.x % (1/scale) <= 0.01)) {
+                if(point.x*scale >= -(origin.x) && point.x*scale <= (WIDTH - origin.x) && (point.x % (0.5/scale) >= -0.01) && (point.x % (0.5/scale) <= 0.01)) {
                     double yValue = (point.y)*-1*scale + origin.y;
                     g.setColor(color);
                     g.drawRect((int) Math.round((point.x*scale + origin.x)), (int) Math.round(yValue), 1, 1);
@@ -55,27 +61,21 @@ public class Function {
     }
 
     public void calcFunction(double start, double end, double increase) {
-        // Placeholder String for testing
-        String equation = "3*x + 10";
+        ScriptEngineManager manager = new ScriptEngineManager();
+        ScriptEngine engine = manager.getEngineByName("js");
 
         // Calculate f(x) of each point, add those into the ArrayList
         if (isFirstCalc) {
-            for(double x = start; x < end; x+=increase) {
-                points.add(new MyPoint(x, value*0.1*x + value) );
-            }
-            isFirstCalc = false;
-        }
-        else {
-            for(double x = start; x < end; x+=increase) {
-                MyPoint point = new MyPoint(x, value*0.1*x + value);
-                System.out.println(points.contains(point));
-                if(!points.contains(point)) {
-                    points.add(point);
-                    System.out.println("Added");
+            try {
+                for(double x = start; x < end; x+=increase) {
+                    engine.put("x", x);
+                    points.add(new MyPoint(x, new Double(engine.eval(equation).toString())));
                 }
+                isFirstCalc = false;
+            } catch (ScriptException e) {
+                e.printStackTrace();
             }
         }
-
     }
 
     public void setColor(Color color) {
@@ -86,5 +86,13 @@ public class Function {
         // Remove points outside of a specific range (display + buffer)
         points.removeIf(point -> origin.x + point.x > WIDTH + buffer || origin.x - point.x < -buffer);
         // calcFunction(-origin.x - 100, -origin.x + WIDTH + 100, 0.005);
+    }
+
+    private void calcRoot(double epsilon) {
+        // calculating the root of this function with Newton´s method: x_n+1 = x_n - f(x)/f'(x);
+    }
+
+    public void translateEquation(String f) {
+
     }
 }
