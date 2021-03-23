@@ -34,6 +34,14 @@ public class Function {
         System.out.println("Finished calculating: " + (System.currentTimeMillis() - startCalc) + " ms");
     }
 
+    public Function(double value) {
+        this.color = Color.MAGENTA;
+        this.value = value;
+        long startCalc = System.currentTimeMillis();
+        calcFunction(-2000, 2000, 0.005);
+        System.out.println("Finished calculating: " + (System.currentTimeMillis() - startCalc) + " ms");
+    }
+
     public void renderGraph(MyPoint origin, Graphics g) {
         try {
             for(MyPoint point : points) {
