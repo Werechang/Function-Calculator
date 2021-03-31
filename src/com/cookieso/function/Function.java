@@ -5,7 +5,6 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.ConcurrentModificationException;
 
 import static com.cookieso.function.Display.*;
@@ -36,7 +35,7 @@ public class Function {
         this.color = color;
         this.equation = equation;
         long startCalc = System.currentTimeMillis();
-        calcFunction(-1000, 1000, 0.01);
+        calcFunction(-1000, 1000, 0.04);
         calcRoot(0.0000001);
         System.out.println("Finished calculating: " + (System.currentTimeMillis() - startCalc) + " ms");
     }
@@ -45,20 +44,32 @@ public class Function {
         this.color = Color.MAGENTA;
         this.equation = equation;
         long startCalc = System.currentTimeMillis();
-        calcFunction(-2000, 2000, 0.01);
+        calcFunction(-2000, 2000, 0.04);
         calcRoot(0.0000001);
         System.out.println("Finished calculating: " + (System.currentTimeMillis() - startCalc) + " ms");
     }
 
     public void renderGraph(MyPoint origin, Graphics g) {
-        MyPoint lastPoint;
+        MyPoint lastPoint = null;
         try {
             for(MyPoint point : points) {
-                if(point.x*scale >= -(origin.x) && point.x*scale <= (WIDTH - origin.x) && (point.x % (0.5/scale) >= -0.01) && (point.x % (0.5/scale) <= 0.01)) {
+                // TODO: The visibility of the point should depend on f' ------------------------------here--------------------------------here----
+                if(point.x*scale >= -(origin.x) && point.x*scale <= (WIDTH - origin.x) && (point.x % (0.01/scale) >= -0.01) && (point.x % (0.01/scale) <= 0.01)) {
                     double yValue = (point.y)*-1*scale + origin.y;
-                    double rectHeight = rectHeightExponent < 1 ? 1 : point.y;
+                    int rectHeight = 1;
+                    if (lastPoint != null && rectHeightExponent != 1) {
+                        double diff = point.y - lastPoint.y;
+                        if (diff == 0) {
+                            rectHeight = 1;
+                        } else if (diff < 0) {
+                            rectHeight = (int) Math.floor(diff);
+                        } else {
+                            rectHeight = (int) Math.ceil(diff);
+                        }
+                    }
+                    rectHeight = rectHeightExponent < 1 ? rectHeight : (int) Math.round(point.y);
                     g.setColor(color);
-                    g.drawRect((int) Math.round((point.x*scale + origin.x)), (int) Math.round(yValue), 1, (int) Math.round(rectHeight));
+                    g.drawRect((int) Math.round((point.x*scale + origin.x)), (int) Math.round(yValue), 1, Math.abs(rectHeight));
                 }
                 lastPoint = point;
             }
