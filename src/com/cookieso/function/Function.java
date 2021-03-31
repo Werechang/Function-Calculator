@@ -26,7 +26,6 @@ public class Function {
 
     public ArrayList<MyPoint> points = new ArrayList<>();
     public Color color;
-    private Boolean isFirstCalc = true;
     public ArrayList<Double> zeros = new ArrayList<>();
     public final String equation;
     public static int rectHeightExponent = 0;
@@ -81,17 +80,14 @@ public class Function {
         ScriptEngine engine = manager.getEngineByName("js");
 
         // Calculate f(x) of each point, add those into the ArrayList
-        if (isFirstCalc) {
-            try {
-                for(double x = start; x < end; x+=increase) {
-                    // Currently I´m using a slow ScriptEngine. Performance updates are coming in the future
-                    engine.put("x", x);
-                    points.add(new MyPoint(x, new Double(engine.eval(equation).toString())));
-                }
-                isFirstCalc = false;
-            } catch (ScriptException e) {
-                e.printStackTrace();
+        try {
+            for(double x = start; x < end; x+=increase) {
+                // Currently I´m using a slow ScriptEngine. Performance updates are coming in the future
+                engine.put("x", x);
+                points.add(new MyPoint(x, new Double(engine.eval(equation).toString())));
             }
+        } catch (ScriptException e) {
+            e.printStackTrace();
         }
     }
 
@@ -108,7 +104,6 @@ public class Function {
             }
             return o1.x < o2.x ? 1 : -1;
         });
-        // calcFunction(-origin.x - 100, -origin.x + WIDTH + 100, 0.005);
     }
 
     private void calcRoot(double epsilon) {
@@ -120,12 +115,5 @@ public class Function {
         * }
         *
         * */
-    }
-
-    public void debugPoints() {
-        // Output the x value of all points. This will be removed in the future
-        for (MyPoint p : points) {
-            System.out.println(p.x);
-        }
     }
 }
