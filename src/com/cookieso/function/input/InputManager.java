@@ -37,9 +37,9 @@ public class InputManager {
             origin.y = Display.HEIGHT/2.0;
             Display.scale = 10;
         }
-        if (keyboard.getI()) {
+        /*if (keyboard.getI()) {
             Function.rectHeightExponent = Function.rectHeightExponent*(-1) + 1;
-        }
+        }*/
         mouse.resetScroll();
         initialX = x;
         initialY = y;

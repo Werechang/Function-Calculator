@@ -53,7 +53,7 @@ public class Function {
         MyPoint lastPoint = null;
         try {
             for(MyPoint point : points) {
-                // TODO: The visibility of the point should depend on f' ------------------------------here--------------------------------here----
+                // TODO: The visibility of the point should depend on f'(point.x) --------------------here---------------------------------here----
                 if(point.x*scale >= -(origin.x) && point.x*scale <= (WIDTH - origin.x) && (point.x % (0.01/scale) >= -0.01) && (point.x % (0.01/scale) <= 0.01)) {
                     double yValue = (point.y)*-1*scale + origin.y;
                     int rectHeight = rectHeightExponent < 1 ? 1 : (int) Math.round(point.y*scale);
