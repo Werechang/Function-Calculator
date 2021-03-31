@@ -56,7 +56,7 @@ public class Function {
                 // TODO: The visibility of the point should depend on f' ------------------------------here--------------------------------here----
                 if(point.x*scale >= -(origin.x) && point.x*scale <= (WIDTH - origin.x) && (point.x % (0.01/scale) >= -0.01) && (point.x % (0.01/scale) <= 0.01)) {
                     double yValue = (point.y)*-1*scale + origin.y;
-                    int rectHeight = 1;
+                    int rectHeight = rectHeightExponent < 1 ? 1 : (int) Math.round(point.y*scale);
                     if (lastPoint != null && rectHeightExponent != 1) {
                         double diff = point.y - lastPoint.y;
                         if (diff == 0) {
@@ -67,7 +67,6 @@ public class Function {
                             rectHeight = (int) Math.ceil(diff);
                         }
                     }
-                    rectHeight = rectHeightExponent < 1 ? rectHeight : (int) Math.round(point.y);
                     g.setColor(color);
                     g.drawRect((int) Math.round((point.x*scale + origin.x)), (int) Math.round(yValue), 1, Math.abs(rectHeight));
                 }
