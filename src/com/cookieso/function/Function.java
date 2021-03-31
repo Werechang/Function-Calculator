@@ -5,6 +5,7 @@ import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.ConcurrentModificationException;
 
 import static com.cookieso.function.Display.*;
@@ -29,12 +30,13 @@ public class Function {
     private Boolean isFirstCalc = true;
     public ArrayList<Double> zeros = new ArrayList<>();
     public final String equation;
+    public static int rectHeightExponent = 0;
 
     public Function(Color color, String equation) {
         this.color = color;
         this.equation = equation;
         long startCalc = System.currentTimeMillis();
-        calcFunction(-1000, 1000, 0.005);
+        calcFunction(-1000, 1000, 0.01);
         calcRoot(0.0000001);
         System.out.println("Finished calculating: " + (System.currentTimeMillis() - startCalc) + " ms");
     }
@@ -43,19 +45,22 @@ public class Function {
         this.color = Color.MAGENTA;
         this.equation = equation;
         long startCalc = System.currentTimeMillis();
-        calcFunction(-2000, 2000, 0.005);
+        calcFunction(-2000, 2000, 0.01);
         calcRoot(0.0000001);
         System.out.println("Finished calculating: " + (System.currentTimeMillis() - startCalc) + " ms");
     }
 
     public void renderGraph(MyPoint origin, Graphics g) {
+        MyPoint lastPoint;
         try {
             for(MyPoint point : points) {
                 if(point.x*scale >= -(origin.x) && point.x*scale <= (WIDTH - origin.x) && (point.x % (0.5/scale) >= -0.01) && (point.x % (0.5/scale) <= 0.01)) {
                     double yValue = (point.y)*-1*scale + origin.y;
+                    double rectHeight = rectHeightExponent < 1 ? 1 : point.y;
                     g.setColor(color);
-                    g.drawRect((int) Math.round((point.x*scale + origin.x)), (int) Math.round(yValue), 1, 1);
+                    g.drawRect((int) Math.round((point.x*scale + origin.x)), (int) Math.round(yValue), 1, (int) Math.round(rectHeight));
                 }
+                lastPoint = point;
             }
         } catch (ConcurrentModificationException ignored) {}
     }
@@ -68,6 +73,7 @@ public class Function {
         if (isFirstCalc) {
             try {
                 for(double x = start; x < end; x+=increase) {
+                    // Currently I´m using a slow ScriptEngine. Performance updates are coming in the future
                     engine.put("x", x);
                     points.add(new MyPoint(x, new Double(engine.eval(equation).toString())));
                 }
@@ -85,14 +91,30 @@ public class Function {
     public void updateFunctionBuffer(int buffer) {
         // Remove points outside of a specific range (display + buffer)
         points.removeIf(point -> origin.x + point.x > WIDTH + buffer || origin.x - point.x < -buffer);
+        points.sort((o1, o2) -> {
+            if (o1.x == o2.x) {
+                return 0;
+            }
+            return o1.x < o2.x ? 1 : -1;
+        });
         // calcFunction(-origin.x - 100, -origin.x + WIDTH + 100, 0.005);
     }
 
     private void calcRoot(double epsilon) {
         // calculating the root of this function with Newton´s method: x_n+1 = x_n - f(x)/f'(x);
+        /*
+        * double x = 0;
+        * while (f(x) < epsilon) {
+        * x -= f(x)/f'(x);
+        * }
+        *
+        * */
     }
 
-    public void translateEquation(String f) {
-
+    public void debugPoints() {
+        // Output the x value of all points. This will be removed in the future
+        for (MyPoint p : points) {
+            System.out.println(p.x);
+        }
     }
 }

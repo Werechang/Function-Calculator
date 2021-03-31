@@ -1,6 +1,7 @@
 package com.cookieso.function.input;
 
 import com.cookieso.function.Display;
+import com.cookieso.function.Function;
 import com.cookieso.function.MyPoint;
 
 public class InputManager {
@@ -35,6 +36,9 @@ public class InputManager {
             origin.x = Display.WIDTH/2.0;
             origin.y = Display.HEIGHT/2.0;
             Display.scale = 10;
+        }
+        if (keyboard.getI()) {
+            Function.rectHeightExponent = Function.rectHeightExponent*(-1) + 1;
         }
         mouse.resetScroll();
         initialX = x;
