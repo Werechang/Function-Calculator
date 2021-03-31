@@ -66,9 +66,10 @@ public class Function {
                         } else {
                             rectHeight = (int) Math.ceil(diff);
                         }
+                        rectHeight = Math.abs(rectHeight);
                     }
                     g.setColor(color);
-                    g.drawRect((int) Math.round((point.x*scale + origin.x)), (int) Math.round(yValue), 1, Math.abs(rectHeight));
+                    g.drawRect((int) Math.round((point.x*scale + origin.x)), (int) Math.round(yValue), 1, rectHeight);
                 }
                 lastPoint = point;
             }
